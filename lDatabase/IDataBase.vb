@@ -1,4 +1,4 @@
-﻿Public Interface IDataBase
+﻿Public Interface lDatabase
     ''' <summary>
     ''' 获取数据库连接字串
     ''' </summary>
