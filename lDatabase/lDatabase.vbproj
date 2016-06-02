@@ -93,6 +93,7 @@
     <Compile Include="MySql.vb" />
     <Compile Include="PostgreSQL.vb" />
     <Compile Include="sqlite3.vb" />
+    <Compile Include="SQLServer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

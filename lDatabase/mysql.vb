@@ -8,13 +8,10 @@ Public Class MySql
         dbConnection = ConnctionString
     End Sub
 
-    Public Property connectionString As String Implements lDatabase.connectionString
+    Public ReadOnly Property connectionString As String Implements lDatabase.connectionString
         Get
-            Throw New NotImplementedException()
+            Return dbConnection
         End Get
-        Set(value As String)
-            Throw New NotImplementedException()
-        End Set
     End Property
 
     Public Function ExecuteDataTable(sql As String, Optional Parameters As Dictionary(Of String, Object) = Nothing) As DataTable Implements lDatabase.ExecuteDataTable

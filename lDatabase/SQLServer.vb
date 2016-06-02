@@ -1,13 +1,13 @@
-﻿Imports System.Data.SQLite
+﻿Imports System.Data.SqlClient
 
-Public Class sqlite3
+Public Class SQLServer
     Implements lDatabase
 
     Private dbConnection As String
 
     Public ReadOnly Property connectionString As String Implements lDatabase.connectionString
         Get
-            Return dbConnection
+            Throw New NotImplementedException()
         End Get
     End Property
 
@@ -15,18 +15,19 @@ Public Class sqlite3
         dbConnection = ConnctionString
     End Sub
 
+
     Public Function ExecuteDataTable(sql As String, Optional Parameters As Dictionary(Of String, Object) = Nothing) As DataTable Implements lDatabase.ExecuteDataTable
         Dim dt As DataTable = New DataTable()
         Try
-            Using conn As New SQLiteConnection(dbConnection)
+            Using conn As New SqlConnection(dbConnection)
                 conn.Open()
-                Dim cmd As New SQLiteCommand(sql, conn)
+                Dim cmd As New SqlCommand(sql, conn)
                 If Not Parameters Is Nothing Then
                     For Each Parameter As KeyValuePair(Of String, Object) In Parameters
                         cmd.Parameters.AddWithValue(Parameter.Key, Parameter.Value)
                     Next
                 End If
-                Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                Using reader As SqlDataReader = cmd.ExecuteReader()
                     '根据reader中的信息创建datatable
                     For i = 0 To reader.FieldCount - 1
                         dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i))
@@ -50,9 +51,9 @@ Public Class sqlite3
 
     Public Function ExecuteNonQuery(sql As String, Optional Parameters As Dictionary(Of String, Object) = Nothing) As Integer Implements lDatabase.ExecuteNonQuery
         Try
-            Using conn As SQLiteConnection = New SQLiteConnection(dbConnection)
+            Using conn As SqlConnection = New SqlConnection(dbConnection)
                 conn.Open()
-                Dim cmd As SQLiteCommand = New SQLiteCommand(sql, conn)
+                Dim cmd As SqlCommand = New SqlCommand(sql, conn)
                 If Not Parameters Is Nothing Then
                     For Each Parameter As KeyValuePair(Of String, Object) In Parameters
                         cmd.Parameters.AddWithValue(Parameter.Key, Parameter.Value)
@@ -68,10 +69,10 @@ Public Class sqlite3
 
     Public Function ExecuteScalar(sql As String, Optional Parameters As Dictionary(Of String, Object) = Nothing) As Object Implements lDatabase.ExecuteScalar
         Dim value As Object = Nothing
-        Using conn As SQLiteConnection = New SQLiteConnection(dbConnection)
+        Using conn As SqlConnection = New SqlConnection(dbConnection)
             conn.Open()
 
-            Dim cmd As SQLiteCommand = New SQLiteCommand(sql, conn)
+            Dim cmd As SqlCommand = New SqlCommand(sql, conn)
             If Not Parameters Is Nothing Then
                 For Each Parameter As KeyValuePair(Of String, Object) In Parameters
                     cmd.Parameters.AddWithValue(Parameter.Key, Parameter.Value)
@@ -82,5 +83,4 @@ Public Class sqlite3
 
         Return value
     End Function
-
 End Class

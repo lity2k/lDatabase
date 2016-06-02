@@ -4,13 +4,10 @@ Public Class PostgreSQL
 
     Dim dbConnection As String = Nothing
 
-    Public Property connectionString As String Implements lDatabase.connectionString
+    Public ReadOnly Property connectionString As String Implements lDatabase.connectionString
         Get
-            Throw New NotImplementedException()
+            Return dbConnection
         End Get
-        Set(value As String)
-            Throw New NotImplementedException()
-        End Set
     End Property
 
     Public Sub New(ConnctionString As String)

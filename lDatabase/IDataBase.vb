@@ -3,7 +3,7 @@
     ''' 获取数据库连接字串
     ''' </summary>
     ''' <returns></returns>
-    Property connectionString As String
+    ReadOnly Property connectionString As String
 
     ''' <summary>
     ''' 执行sql查询语句，并返回datatable。
